@@ -28,6 +28,10 @@ function! PatternBranchComplete#FindMatches( branches, pattern )
     \   )
 endfunction
 
+function! s:ParseBranches( pattern )
+    return ingo#regexp#split#TopLevelBranches(ingo#regexp#magic#Normalize(@/))
+endfunction
+
 function! PatternBranchComplete#PatternBranchComplete( findstart, base )
     if a:findstart
 	" Locate the start of the WORD.
@@ -38,7 +42,7 @@ function! PatternBranchComplete#PatternBranchComplete( findstart, base )
 	return l:startCol - 1 " Return byte index, not column.
     else
 	" Split the current search pattern into (toplevel) branches.
-	let l:branches = ingo#regexp#split#TopLevelBranches(ingo#regexp#magic#Normalize(@/))
+	let l:branches = s:ParseBranches(@/)
 
 	" Find matches starting with (after optional non-keyword characters) a:base.
 	let l:matches = PatternBranchComplete#FindMatches(l:branches, '^\%(\k\@!.\)*\V' . escape(a:base, '\'))
