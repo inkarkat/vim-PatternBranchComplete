@@ -29,7 +29,17 @@ function! PatternBranchComplete#FindMatches( branches, pattern )
 endfunction
 
 function! s:ParseBranches( pattern )
-    return ingo#regexp#split#TopLevelBranches(ingo#regexp#magic#Normalize(@/))
+    let l:splits = ingo#regexp#split#PrefixGroupsSuffix(ingo#regexp#magic#Normalize(@/))
+
+    if len(l:splits) == 1
+	" No toplevel branches.
+	return ingo#regexp#split#TopLevelBranches(l:splits[0])
+    elseif len(l:splits) == 3
+	" Put the common prefix / suffix around each branch.
+	return map(ingo#regexp#split#TopLevelBranches(l:splits[1]), 'l:splits[0] . v:val . l:splits[2]')
+    else
+	return []   " TODO: Implement.
+    endif
 endfunction
 
 function! PatternBranchComplete#PatternBranchComplete( findstart, base )
