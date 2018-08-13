@@ -1,0 +1,110 @@
+*PatternBranchComplete.txt*	Insert mode completion for branches in the current search pattern.
+
+		  PATTERN BRANCH COMPLETE    by Ingo Karkat
+						   *PatternBranchComplete.vim*
+description			|PatternBranchComplete-description|
+usage				|PatternBranchComplete-usage|
+installation			|PatternBranchComplete-installation|
+configuration			|PatternBranchComplete-configuration|
+limitations			|PatternBranchComplete-limitations|
+known problems			|PatternBranchComplete-known-problems|
+todo				|PatternBranchComplete-todo|
+history				|PatternBranchComplete-history|
+
+==============================================================================
+DESCRIPTION				   *PatternBranchComplete-description*
+
+This plugin ...
+
+HOW IT WORKS								     *
+
+SOURCE									     *
+(Original Vim tip, Stack Overflow answer, ...)
+
+SEE ALSO								     *
+
+- Check out the |CompleteHelper.vim| plugin page (vimscript #3914) for a full
+  list of insert mode completions powered by it.
+
+RELATED WORKS								     *
+(Alternatives from other authors, other approaches, references not used here.)
+
+==============================================================================
+USAGE						 *PatternBranchComplete-usage*
+
+In insert mode, invoke the pattern branch completion via CTRL-X \ |.
+You can then search forward and backward via CTRL-N / CTRL-P, as usual.
+
+							      *i_CTRL-X_\_bar*
+CTRL-X \ |		Split the current search pattern (|quote/|) into
+			toplevel branches (/foo\|bar/ -> foo, bar) and find
+			branches whole contents match the keyword before the
+			cursor. First, a match at the beginning is tried; if
+			that returns no results, it may match anywhere.
+
+==============================================================================
+INSTALLATION				  *PatternBranchComplete-installation*
+
+The code is hosted in a Git repo at
+https://github.com/inkarkat/vim-PatternBranchComplete
+You can use your favorite plugin manager, or "git clone" into a directory used
+for Vim |packages|. Releases are on the "stable" branch, the latest unstable
+development snapshot on "master".
+
+This script is also packaged as a |vimball|. If you have the "gunzip"
+decompressor in your PATH, simply edit the *.vmb.gz package in Vim; otherwise,
+decompress the archive first, e.g. using WinZip. Inside Vim, install by
+sourcing the vimball or via the |:UseVimball| command. >
+    vim PatternBranchComplete*.vmb.gz
+    :so %
+To uninstall, use the |:RmVimball| command.
+
+DEPENDENCIES				  *PatternBranchComplete-dependencies*
+
+- Requires Vim 7.0 or higher.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.035 or
+  higher.
+- Requires the |CompleteHelper.vim| plugin (vimscript #3914), version 1.11 or
+  higher.
+
+==============================================================================
+CONFIGURATION				 *PatternBranchComplete-configuration*
+
+For a permanent configuration, put the following commands into your |vimrc|:
+configvar
+						 *PatternBranchComplete-remap*
+If you want to use a different mapping, map your keys to the
+<Plug>(PatternBranchComplete) mapping target _before_ sourcing the script
+(e.g. in your |vimrc|): >
+    imap <C-x><Bslash><Bar> <Plug>(PatternBranchComplete)
+<
+==============================================================================
+LIMITATIONS				   *PatternBranchComplete-limitations*
+
+KNOWN PROBLEMS				*PatternBranchComplete-known-problems*
+
+TODO						  *PatternBranchComplete-todo*
+
+IDEAS						 *PatternBranchComplete-ideas*
+
+CONTRIBUTING				    *PatternBranchComplete-contribute*
+
+Report any bugs, send patches, or suggest features via the issue tracker at
+https://github.com/inkarkat/vim-PatternBranchComplete/issues or email (address below).
+
+==============================================================================
+HISTORY					       *PatternBranchComplete-history*
+
+GOAL
+First published version.
+
+0.01	13-Aug-2018
+Started development.
+
+==============================================================================
+Copyright: (C) 2018 Ingo Karkat
+The VIM LICENSE applies to this plugin; see |copyright|.
+
+Maintainer:	Ingo Karkat <ingo@karkat.de>
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
