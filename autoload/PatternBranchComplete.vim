@@ -21,7 +21,7 @@ function! PatternBranchComplete#FindMatches( branches, pattern )
     return
     \   map(
     \       filter(
-    \           a:branches,
+    \           copy(a:branches),
     \           'v:val =~ a:pattern'
     \       ),
     \       'CompleteHelper#Abbreviate#Word({"word": v:val})'
