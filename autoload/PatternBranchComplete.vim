@@ -38,7 +38,23 @@ function! s:ParseBranches( pattern )
 	" Put the common prefix / suffix around each branch.
 	return map(ingo#regexp#split#TopLevelBranches(l:splits[1]), 'l:splits[0] . v:val . l:splits[2]')
     else
-	return []   " TODO: Implement.
+	" Each existing branch is combined with all branches from the subsequent
+	" group (plus corresponding prefix), until all are processed. The number
+	" of branches is the multiplication of each group's number of branches.
+	let l:branches = ['']
+	while len(l:splits) > 1
+	    let l:prefix = remove(l:splits, 0)
+	    let l:group = remove(l:splits, 0)
+	    let l:newBranches = ingo#regexp#split#TopLevelBranches(l:group)
+	    let l:updatedBranches = []
+	    for l:b in l:branches
+		let l:updatedBranches += map(copy(l:newBranches), 'l:b . l:prefix . v:val')
+	    endfor
+	    let l:branches = l:updatedBranches
+	endwhile
+
+	" Finally add the last suffix.
+	return map(l:branches, 'v:val . l:splits[0]')
     endif
 endfunction
 
