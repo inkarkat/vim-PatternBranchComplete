@@ -8,6 +8,8 @@ let @/ = 'my\%(Foo\|Bar\|Fox\)Trott'
 
 call vimtest#StartTap()
 call vimtap#Plan(2)
+
 call IsMatchesInIsolatedLine('myB', ['myBarTrott'], 'match for myB')
 call IsMatchesInIsolatedLine('myF', ['myFooTrott', 'myFoxTrott'], 'matches for myF')
+
 call vimtest#Quit()
