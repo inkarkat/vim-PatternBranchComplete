@@ -2,6 +2,7 @@
 "
 " DEPENDENCIES:
 "   - CompleteHelper/Abbreviate.vim autoload script
+"   - ingo/regexp/deconstruct.vim autoload script
 "   - ingo/regexp/magic.vim autoload script
 "   - ingo/regexp/split.vim autoload script
 "
@@ -29,7 +30,9 @@ function! PatternBranchComplete#FindMatches( branches, pattern )
 endfunction
 
 function! s:ParseBranches( pattern )
-    let l:splits = ingo#regexp#split#PrefixGroupsSuffix(ingo#regexp#magic#Normalize(@/))
+    let l:normalizedPattern = ingo#regexp#magic#Normalize(@/)
+    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:normalizedPattern)
+    let l:splits = ingo#regexp#split#PrefixGroupsSuffix(l:quasiLiteralText)
 
     if len(l:splits) == 1
 	" No toplevel branches.

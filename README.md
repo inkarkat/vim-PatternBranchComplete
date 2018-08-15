@@ -25,10 +25,14 @@ USAGE
     You can then search forward and backward via CTRL-N / CTRL-P, as usual.
 
     CTRL-X \ |              Split the current search pattern (quote/) into
-                            toplevel branches (/foo\|bar/ -> foo, bar) and find
-                            branches whole contents match the keyword before the
-                            cursor. First, a match at the beginning is tried; if
-                            that returns no results, it may match anywhere.
+                            toplevel branches (/foo\|bar/ -> foo, bar), remove
+                            regular expression artifacts like position atoms
+                            (/ordinary-atom) and |/multi|s, and unescape special
+                            characters. In those branches that now (depending on
+                            the pattern complexity) resemble mostly normal text,
+                            find branches whose contents match the keyword before
+                            the cursor. First, a match at the beginning is tried;
+                            if that returns no results, it may match anywhere.
 
 INSTALLATION
 ------------------------------------------------------------------------------
