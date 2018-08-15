@@ -29,10 +29,15 @@ function! PatternBranchComplete#FindMatches( branches, pattern )
     \   )
 endfunction
 
+function! s:OptionToBranches( pattern )
+    return substitute(a:pattern, '\(\%(\%(\%(^\|[^\\]\)\%(\\\\\)*\\\)\@<!\\\)\@<![^]]\)\\[=?]', '\\%(\\|\1\\)', 'g')
+endfunction
+
 function! s:ParseBranches( pattern )
     let l:normalizedPattern = ingo#regexp#magic#Normalize(@/)
     let l:patternWithCollectionsAsBranches = ingo#regexp#collection#ToBranches(l:normalizedPattern)
-    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:patternWithCollectionsAsBranches)
+    let l:patternWithOptionAsBranches = s:OptionToBranches(l:patternWithCollectionsAsBranches)
+    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:patternWithOptionAsBranches)
     let l:splits = ingo#regexp#split#PrefixGroupsSuffix(l:quasiLiteralText)
 
     if len(l:splits) == 1
