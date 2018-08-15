@@ -31,7 +31,8 @@ endfunction
 
 function! s:ParseBranches( pattern )
     let l:normalizedPattern = ingo#regexp#magic#Normalize(@/)
-    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:normalizedPattern)
+    let l:patternWithCollectionsAsBranches = ingo#regexp#collection#ToBranches(l:normalizedPattern)
+    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:patternWithCollectionsAsBranches)
     let l:splits = ingo#regexp#split#PrefixGroupsSuffix(l:quasiLiteralText)
 
     if len(l:splits) == 1
