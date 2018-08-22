@@ -2,6 +2,8 @@
 "
 " DEPENDENCIES:
 "   - CompleteHelper/Abbreviate.vim autoload script
+"   - ingo/msg.vim autoload script
+"   - ingo/regexp/collection.vim autoload script
 "   - ingo/regexp/deconstruct.vim autoload script
 "   - ingo/regexp/magic.vim autoload script
 "   - ingo/regexp/split.vim autoload script
@@ -76,16 +78,21 @@ function! PatternBranchComplete#PatternBranchComplete( findstart, base )
 	endif
 	return l:startCol - 1 " Return byte index, not column.
     else
-	" Split the current search pattern into (toplevel) branches.
-	let l:branches = s:ParseBranches(@/)
+	try
+	    " Split the current search pattern into (toplevel) branches.
+	    let l:branches = s:ParseBranches(@/)
 
-	" Find matches starting with (after optional non-keyword characters) a:base.
-	let l:matches = PatternBranchComplete#FindMatches(l:branches, '^\%(\k\@!.\)*\V' . escape(a:base, '\'))
-	if empty(l:matches)
-	    " Find matches containing a:base.
-	    let l:matches = PatternBranchComplete#FindMatches(l:branches, '\V' . escape(a:base, '\'))
-	endif
-	return l:matches
+	    " Find matches starting with (after optional non-keyword characters) a:base.
+	    let l:matches = PatternBranchComplete#FindMatches(l:branches, '^\%(\k\@!.\)*\V' . escape(a:base, '\'))
+	    if empty(l:matches)
+		" Find matches containing a:base.
+		let l:matches = PatternBranchComplete#FindMatches(l:branches, '\V' . escape(a:base, '\'))
+	    endif
+	    return l:matches
+	catch /^PrefixGroupsSuffix:/
+	    call ingo#msg#CustomExceptionMsg('PrefixGroupsSuffix')
+	    return -3
+	endtry
     endif
 endfunction
 
