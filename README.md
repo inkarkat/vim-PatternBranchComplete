@@ -1,22 +1,29 @@
-PATTERN BRANCH COMPLETE   
+PATTERN BRANCH COMPLETE
 ===============================================================================
 _by Ingo Karkat_
 
 DESCRIPTION
 ------------------------------------------------------------------------------
 
-This plugin ...
+Some workflows gather several alternative (often mostly literal) pattern
+branches as the current search pattern, for example to refactor / rename a
+constant, class, and corresponding getters in one go. During this, it can be
+useful to quickly recall words from the individual search alternatives in
+insert mode completion, e.g. when writing / adapting corresponding API
+documentation.
 
-### SOURCE
-(Original Vim tip, Stack Overflow answer, ...)
+This plugin offers quick access to literal strings from the regular expression
+branches of the current search pattern (quote/) via an alternative insert
+mode completion.
 
 ### SEE ALSO
 
+- The SearchAlternatives.vim plugin ([vimscript #4146](http://www.vim.org/scripts/script.php?script_id=4146)) offers mappings and
+  commands to quickly add alternative branches to the current search pattern,
+  facilitating a workflow that then also benefits from the completion source
+  offered by this plugin.
 - Check out the CompleteHelper.vim plugin page ([vimscript #3914](http://www.vim.org/scripts/script.php?script_id=3914)) for a full
   list of insert mode completions powered by it.
-
-### RELATED WORKS
-(Alternatives from other authors, other approaches, references not used here.)
 
 USAGE
 ------------------------------------------------------------------------------
@@ -38,7 +45,7 @@ INSTALLATION
 ------------------------------------------------------------------------------
 
 The code is hosted in a Git repo at
-https://github.com/inkarkat/vim-PatternBranchComplete
+    https://github.com/inkarkat/vim-PatternBranchComplete
 You can use your favorite plugin manager, or "git clone" into a directory used
 for Vim packages. Releases are on the "stable" branch, the latest unstable
 development snapshot on "master".
@@ -77,7 +84,8 @@ CONTRIBUTING
 ------------------------------------------------------------------------------
 
 Report any bugs, send patches, or suggest features via the issue tracker at
-https://github.com/inkarkat/vim-PatternBranchComplete/issues or email (address below).
+https://github.com/inkarkat/vim-PatternBranchComplete/issues or email (address
+below).
 
 HISTORY
 ------------------------------------------------------------------------------
@@ -89,7 +97,7 @@ First published version.
 - Started development.
 
 ------------------------------------------------------------------------------
-Copyright: (C) 2018 Ingo Karkat -
+Copyright: (C) 2018-2019 Ingo Karkat -
 The [VIM LICENSE](http://vimdoc.sourceforge.net/htmldoc/uganda.html#license) applies to this plugin.
 
 Maintainer:     Ingo Karkat <ingo@karkat.de>
