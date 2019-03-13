@@ -8,7 +8,7 @@
 "   - ingo/regexp/magic.vim autoload script
 "   - ingo/regexp/split.vim autoload script
 "
-" Copyright: (C) 2018 Ingo Karkat
+" Copyright: (C) 2018-2019 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
@@ -39,8 +39,7 @@ function! s:ParseBranches( pattern )
     let l:normalizedPattern = ingo#regexp#magic#Normalize(@/)
     let l:patternWithCollectionsAsBranches = ingo#regexp#collection#ToBranches(l:normalizedPattern)
     let l:patternWithOptionAsBranches = s:OptionToBranches(l:patternWithCollectionsAsBranches)
-    let l:quasiLiteralText = ingo#regexp#deconstruct#ToQuasiLiteral(l:patternWithOptionAsBranches)
-    let l:splits = ingo#regexp#split#PrefixGroupsSuffix(l:quasiLiteralText)
+    let l:splits = ingo#regexp#split#PrefixGroupsSuffix(l:patternWithOptionAsBranches)
 
     if len(l:splits) == 1
 	" No toplevel branches.
@@ -81,12 +80,13 @@ function! PatternBranchComplete#PatternBranchComplete( findstart, base )
 	try
 	    " Split the current search pattern into (toplevel) branches.
 	    let l:branches = s:ParseBranches(@/)
+	    let l:literalBranches = map(l:branches, 'ingo#regexp#deconstruct#ToQuasiLiteral(v:val)')
 
 	    " Find matches starting with (after optional non-keyword characters) a:base.
-	    let l:matches = PatternBranchComplete#FindMatches(l:branches, '^\%(\k\@!.\)*\V' . escape(a:base, '\'))
+	    let l:matches = PatternBranchComplete#FindMatches(l:literalBranches, '^\%(\k\@!.\)*\V' . escape(a:base, '\'))
 	    if empty(l:matches)
 		" Find matches containing a:base.
-		let l:matches = PatternBranchComplete#FindMatches(l:branches, '\V' . escape(a:base, '\'))
+		let l:matches = PatternBranchComplete#FindMatches(l:literalBranches, '\V' . escape(a:base, '\'))
 	    endif
 	    return l:matches
 	catch /^PrefixGroupsSuffix:/
